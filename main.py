@@ -257,11 +257,26 @@ def result(text, lang):
     bottomframe = Frame(window)
     bottomframe.pack(side=BOTTOM, pady=10)
     Button(bottomframe, width=25, height=5, text="Повернутися до початку", font="Solasta 15", relief=RIDGE, bd=3,
-           command=main_window).pack(side=LEFT)
+           command=main_window).pack(side=LEFT, padx=10)
     Button(bottomframe, width=25, height=5, text="Зберегти результат в файл", font="Solasta 15", relief=RIDGE, bd=3,
-           command=lambda: save(output)).pack(side=LEFT, padx=180)
+           command=lambda: save(output)).pack(side=LEFT, padx=10)
+    Button(bottomframe, width=25, height=5, text="Показати початковий текст", font="Solasta 15", relief=RIDGE, bd=3,
+           command=lambda: show_sub_window(text)).pack(side=LEFT, padx=10)
     Button(bottomframe, width=25, height=5, text="Вийти", font="Solasta 15", relief=RIDGE, bd=3,
-           command=on_closing).pack(side=LEFT)
+           command=on_closing).pack(side=LEFT, padx=10)
+
+
+def show_sub_window(text):
+    sub_window = Toplevel(window)
+    sub_window.title('Original text')
+    sub_window.geometry('600x800')
+
+    result_text = scrolledtext.ScrolledText(sub_window, undo=True, wrap=WORD)
+    result_text['font'] = ('consolas', '12')
+    result_text.pack(expand=True, fill='both')
+
+    result_text.insert(1.0, text)
+    result_text.configure(state='disabled')
 
 
 def save(output):
